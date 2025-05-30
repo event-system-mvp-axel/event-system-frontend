@@ -41,6 +41,13 @@ export const authService = {
   getProfile: async () => {
     const response = await userAPI.get('/users/profile');
     return response.data;
+  },
+  changePassword: async (currentPassword, newPassword) => {
+    const response = await userAPI.put('/users/change-password', {
+      currentPassword,
+      newPassword
+    });
+    return response.data;
   }
 };
 
@@ -72,6 +79,10 @@ export const ticketService = {
   },
   getTicket: async (id) => {
     const response = await ticketAPI.get(`/tickets/${id}`);
+    return response.data;
+  },
+  deleteTicket: async (id) => {
+    const response = await ticketAPI.delete(`/tickets/${id}`);
     return response.data;
   }
 };

@@ -61,7 +61,7 @@ const Home = () => {
             WebkitTextFillColor: 'transparent',
           }}
         >
-          Välkommen till Event System
+          Välkommen till Eventsky Event System
         </Typography>
         <Typography variant="h5" color="text.secondary" paragraph sx={{ mb: 4 }}>
           Upptäck och boka biljetter till fantastiska evenemang

@@ -1,32 +1,34 @@
 import React from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import EventIcon from '@mui/icons-material/Event';
-import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const menuItems = [
     { icon: <GridViewIcon />, path: '/', label: 'Hem' },
     { icon: <ConfirmationNumberIcon />, path: '/my-tickets', label: 'Mina Biljetter' },
     { icon: <EventIcon />, path: '/events', label: 'Evenemang' },
-    { icon: <HomeIcon />, path: '/venues', label: 'Lokaler' },
     { icon: <PersonIcon />, path: '/profile', label: 'Profil' },
     { icon: <StarIcon />, path: '/favorites', label: 'Favoriter' },
   ];
 
-  const bottomItems = [
+  const bottomItems = user ? [
     { icon: <SettingsIcon />, path: '/settings', label: 'Inställningar' },
-    { icon: <LogoutIcon />, action: logout, label: 'Logga ut' },
+    { icon: <LogoutIcon />, action: () => { logout(); navigate('/'); }, label: 'Logga ut' },
+  ] : [
+    { icon: <LoginIcon />, path: '/login', label: 'Logga in' },
   ];
 
   const NavButton = ({ item }) => {
@@ -38,7 +40,7 @@ const Sidebar = () => {
           <IconButton
             onClick={item.action}
             sx={{
-              color: 'text.secondary',
+              color: '#37437D',
               backgroundColor: 'transparent',
               '&:hover': {
                 backgroundColor: 'rgba(255, 20, 147, 0.1)',
@@ -47,7 +49,7 @@ const Sidebar = () => {
               borderRadius: 2,
               width: 48,
               height: 48,
-              mb: 1,
+              mb: 2,
             }}
           >
             {item.icon}
@@ -62,7 +64,7 @@ const Sidebar = () => {
           component={Link}
           to={item.path}
           sx={{
-            color: isActive ? 'primary.main' : 'text.secondary',
+            color: isActive ? 'primary.main' : '#37437D',
             backgroundColor: isActive ? 'rgba(255, 20, 147, 0.1)' : 'transparent',
             '&:hover': {
               backgroundColor: 'rgba(255, 20, 147, 0.1)',
@@ -71,7 +73,7 @@ const Sidebar = () => {
             borderRadius: 2,
             width: 48,
             height: 48,
-            mb: 1,
+            mb: 2,
           }}
         >
           {item.icon}
@@ -97,35 +99,67 @@ const Sidebar = () => {
         zIndex: 1200,
       }}
     >
-      {/* Logo */}
-      <Box
-        sx={{
-          width: 48,
-          height: 48,
-          borderRadius: 2,
-          background: 'linear-gradient(135deg, #FF1493 0%, #FF69B4 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          mb: 4,
-          cursor: 'pointer',
-        }}
-        component={Link}
-        to="/"
-      >
-        <EventIcon sx={{ color: 'white', fontSize: 28 }} />
+      {/* Logo Section */}
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        mb: 5,
+      }}>
+        {/* Project Name */}
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#1C2346',
+            fontWeight: 700,
+            fontSize: '1.1rem',
+            letterSpacing: '-0.5px',
+            mb: 2,
+          }}
+        >
+          Eventsky
+        </Typography>
+
+        {/* Logo */}
+        <Box
+          sx={{
+            width: 48,
+            height: 48,
+            borderRadius: 2,
+            background: 'linear-gradient(135deg, #FF1493 0%, #FF69B4 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+          component={Link}
+          to="/"
+        >
+          <EventIcon sx={{ color: 'white', fontSize: 28 }} />
+        </Box>
       </Box>
 
       {/* Main Navigation */}
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ 
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+      }}>
         {menuItems.map((item, index) => (
           <NavButton key={index} item={item} />
         ))}
       </Box>
 
       {/* Bottom Navigation */}
-      <Box>
-        {user && bottomItems.map((item, index) => (
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+      }}>
+        {bottomItems.map((item, index) => (
           <NavButton key={index} item={item} />
         ))}
       </Box>
