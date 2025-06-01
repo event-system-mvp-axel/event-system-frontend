@@ -137,7 +137,7 @@ const Events = () => {
                 },
               }}
             >
-              Draft (22)
+              Draft (0)
             </ToggleButton>
             <ToggleButton 
               value="past"
@@ -153,7 +153,7 @@ const Events = () => {
                 },
               }}
             >
-              Past (32)
+              Past (0)
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
