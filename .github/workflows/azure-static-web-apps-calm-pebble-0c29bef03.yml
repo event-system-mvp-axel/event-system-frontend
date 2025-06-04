@@ -17,18 +17,16 @@ jobs:
     permissions:
        id-token: write
        contents: read
-   steps:
-  - uses: actions/checkout@v3
-    with:
-      submodules: true
-      lfs: false
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: '18'
-      cache: 'npm'
-  - name: Install OIDC Client from Core Package
-    run: npm install @actions/core@1.6.0 @actions/http-client
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -50,6 +48,7 @@ jobs:
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
+          app_build_command: "npm run build" # Build command
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
 
