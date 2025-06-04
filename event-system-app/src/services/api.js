@@ -1,18 +1,16 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-
-// Skapa axios instanser för varje service
+// Skapa axios instanser för varje service med Azure URLs
 const userAPI = axios.create({
-  baseURL: 'http://localhost:5181/api'  // User Service
+  baseURL: `${process.env.REACT_APP_USER_API}/api`  // User Service
 });
 
 const eventAPI = axios.create({
-  baseURL: 'http://localhost:5098/api'  // Event Service
+  baseURL: `${process.env.REACT_APP_EVENT_API}/api`  // Event Service
 });
 
 const ticketAPI = axios.create({
-  baseURL: 'http://localhost:5164/api'  // Ticket Service
+  baseURL: `${process.env.REACT_APP_TICKET_API}/api`  // Ticket Service
 });
 
 // Lägg till JWT token till requests
